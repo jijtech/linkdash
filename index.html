@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startpage</title>
+<style>
+:root {
+    --color-bg: #1c1c1e;
+    --color-bg-alt: #2c2c2e;
+    --color-bg-form: #232326;
+    --color-bg-form2: #29292c;
+    --color-bg-sidebar: #2c2c2e;
+    --color-bg-info: #3a3a3c;
+    --color-text: #f0f0f0;
+    --color-text-secondary: #b0b0b0;
+    --color-link: #0a84ff;
+    --color-link-hover: #4f8cff;
+    --color-btn: #444;
+    --color-btn-hover: #666;
+    --color-btn-alt: #b0f312;
+    --color-btn-alt2: #0a84ff;
+    --color-border: #444;
+    --color-border2: #3a3a3c;
+    --color-danger: #e74c3c;
+    --color-warning: #b0f312;
+    --color-success: #2ecc71;
+    --color-favicon-bg: #222;
+    --color-rss-item-date: #aaa;
+    --color-rss-feed-list: #aaa;
+    --color-rss-feed-list-btn-hover: #ff5555;
+    --color-file-url: #888;
+    --color-status-good: #2ecc71;
+    --color-status-ok: #b0f312;
+    --color-status-weak: #ff9900;
+    --color-status-bad: #e74c3c;
+    --color-btn-gradient: linear-gradient(90deg, #0a84ff 60%, #4f8cff 100%);
+    --color-btn-gradient-alt: linear-gradient(90deg, #b0f312 60%, #0a84ff 100%);
+    --color-btn-gradient-hover: linear-gradient(90deg, #4f8cff 0%, #0a84ff 100%);
+    --color-btn-gradient-alt-hover: linear-gradient(90deg, #0a84ff 0%, #b0f312 100%);
+    --color-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+    --color-shadow-btn: 0 2px 8px 0 rgba(10,132,255,0.10);
+    --color-shadow-btn-alt: 0 2px 8px 0 rgba(176,243,18,0.10);
+    --color-shadow-btn-hover: 0 4px 16px 0 rgba(10,132,255,0.18);
+    --color-shadow-btn-alt-hover: 0 4px 16px 0 rgba(176,243,18,0.18);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+header {
+    background-color: var(--color-bg-alt);
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+h1 {
+    font-size: 1.5em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.export-btn, .import-btn {
+    margin-left: 8px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-btn);
+    color: #e0e0e0;
+    cursor: pointer;
+    font-size: 0.6em;
+    transition: background-color 0.2s, color 0.2s;
+}
+.export-btn:hover, .import-btn:hover {
+    background-color: var(--color-btn-hover);
+    color: #fff;
+}
+.theme-toggle-btn {
+    margin-left: 8px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-btn);
+    color: #e0e0e0;
+    cursor: pointer;
+    font-size: 0.6em;
+    transition: background-color 0.2s, color 0.2s;
+}
+.theme-toggle-btn:hover {
+    background-color: var(--color-btn-hover);
+    color: #fff;
+}
+.header-actions {
+    display: none;
+}
+.export-import-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+}
+.main-content-and-sidebar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+.main-content {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+.rss-sidebar {
+    width: 300px;
+    background-color: var(--color-bg-sidebar);
+    padding: 20px;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+}
+@media (max-width: 1000px) {
+    .main-content-and-sidebar {
+        flex-direction: column;
+    }
+    .rss-sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        order: 2;
+    }
+    .main-content {
+        order: 1;
+    }
+}
+/* --- Filemanager grid for links and fences --- */
+.filemanager-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 18px;
+    margin-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.fence-block {
+    background: var(--color-bg-form);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: var(--color-shadow);
+    border: 2px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+.fence-block.drag-over {
+    border-color: var(--color-link);
+    box-shadow: 0 0 0 2px #0a84ff33;
+}
+.fence-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.fence-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #73ba25;
+    flex: 1;
+    word-break: break-all;
+}
+/* --- Begin icon color on hover only --- */
+.fence-delete-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fence-delete-btn svg {
+    color: #aaa;
+    transition: color 0.15s;
+}
+.fence-delete-btn:hover {
+    background: var(--color-bg-info);
+}
+.fence-delete-btn:hover svg {
+    color: var(--color-danger);
+}
+.fence-edit-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fence-edit-btn svg {
+    color: #aaa;
+    transition: color 0.15s;
+}
+.fence-edit-btn:hover {
+    background: var(--color-bg-info);
+}
+.fence-edit-btn:hover svg {
+    color: var(--color-btn-alt);
+}
+/* --- End icon color on hover only --- */
+.fence-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 32px;
+}
+.filemanager-ungrouped {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 32px;
+}
+.file-tile {
+    background: var(--color-bg-form);
+    border-radius: 10px;
+    min-width: 220px;
+    max-width: 320px;
+    flex: 1 1 220px;
+    padding: 16px 10px 12px 10px;
+    box-shadow: var(--color-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    opacity: 1;
+    cursor: grab;
+    user-select: none;
+    margin: 0;
+}
+.file-tile.drag-over {
+    border-color: var(--color-link);
+    box-shadow: 0 0 0 2px #0a84ff33;
+}
+.file-tile.dragging {
+    opacity: 0.5;
+}
+.file-favicon {
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    background: var(--color-favicon-bg);
+    object-fit: contain;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.10);
+}
+.file-name {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin-bottom: 6px;
+    word-break: break-all;
+}
+.file-url {
+    font-size: 0.8em;
+    color: var(--color-file-url);
+    text-align: center;
+    margin-bottom: 6px;
+    word-break: break-all;
+}
+.file-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+/* --- Begin icon color on hover only for file actions --- */
+.file-delete-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.file-delete-btn svg {
+    color: #aaa;
+    transition: color 0.15s;
+}
+.file-delete-btn:hover {
+    background: var(--color-bg-info);
+}
+.file-delete-btn:hover svg {
+    color: var(--color-danger);
+}
+.file-edit-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.file-edit-btn svg {
+    color: #aaa;
+    transition: color 0.15s;
+}
+.file-edit-btn:hover {
+    background: var(--color-bg-info);
+}
+.file-edit-btn:hover svg {
+    color: var(--color-link);
+}
+/* --- End icon color on hover only for file actions --- */
+.add-link-form-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.add-link-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    background: var(--color-bg-form);
+    border-radius: 12px;
+    padding: 8px 6px 8px 6px;
+    box-shadow: var(--color-shadow);
+    max-width: 600px;
+    margin: 0 auto;
+}
+.add-link-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.add-link-label {
+    font-size: 0.92em;
+    color: var(--color-text-secondary);
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+}
+.add-link-input, .add-link-url {
+    padding: 6px 8px;
+    border-radius: 7px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-form2);
+    color: var(--color-text);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 120px;
+    box-sizing: border-box;
+}
+.add-link-input:focus, .add-link-url:focus {
+    border-color: var(--color-link);
+    box-shadow: 0 0 0 2px #0a84ff33;
+}
+.add-link-submit-btn {
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: none;
+    background: var(--color-btn-gradient);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75em;
+    cursor: pointer;
+    box-shadow: var(--color-shadow-btn);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    margin-top: 18px;
+    letter-spacing: 0.01em;
+}
+.add-link-submit-btn:hover, .add-link-submit-btn:focus {
+    background: var(--color-btn-gradient-hover);
+    box-shadow: var(--color-shadow-btn-hover);
+    transform: translateY(-2px) scale(1.03);
+}
+.add-link-btn {
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: none;
+    background: var(--color-btn-gradient);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75em;
+    cursor: pointer;
+    box-shadow: var(--color-shadow-btn);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    letter-spacing: 0.01em;
+}
+.add-link-btn:hover, .add-link-btn:focus {
+    background: var(--color-btn-gradient-hover);
+    box-shadow: var(--color-shadow-btn-hover);
+    transform: translateY(-2px) scale(1.03);
+}
+.add-fence-btn {
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: none;
+    background: var(--color-btn-gradient-alt);
+    color: #222;
+    font-weight: 600;
+    font-size: 0.75em;
+    cursor: pointer;
+    box-shadow: var(--color-shadow-btn-alt);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    margin-left: 8px;
+    letter-spacing: 0.01em;
+}
+.add-fence-btn:hover, .add-fence-btn:focus {
+    background: var(--color-btn-gradient-alt-hover);
+    box-shadow: var(--color-shadow-btn-alt-hover);
+    transform: translateY(-2px) scale(1.03);
+}
+.add-fence-form-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.add-fence-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    background: var(--color-bg-form);
+    border-radius: 12px;
+    padding: 8px 6px 8px 6px;
+    box-shadow: var(--color-shadow);
+    max-width: 400px;
+    margin: 0 auto;
+}
+.add-fence-input {
+    padding: 6px 8px;
+    border-radius: 7px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-form2);
+    color: var(--color-text);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 120px;
+    box-sizing: border-box;
+}
+.add-fence-input:focus {
+    border-color: var(--color-btn-alt);
+    box-shadow: 0 0 0 2px #b0f31233;
+}
+.add-fence-submit-btn {
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: none;
+    background: var(--color-btn-gradient-alt);
+    color: #222;
+    font-weight: 600;
+    font-size: 0.75em;
+    cursor: pointer;
+    box-shadow: var(--color-shadow-btn-alt);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    margin-top: 18px;
+    letter-spacing: 0.01em;
+}
+.add-fence-submit-btn:hover, .add-fence-submit-btn:focus {
+    background: var(--color-btn-gradient-alt-hover);
+    box-shadow: var(--color-shadow-btn-alt-hover);
+    transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 1400px) {
+    .fence-links, .filemanager-ungrouped {
+        gap: 14px;
+    }
+    .file-tile {
+        min-width: 180px;
+        max-width: 1fr;
+        flex-basis: 180px;
+    }
+}
+@media (max-width: 900px) {
+    .fence-links, .filemanager-ungrouped {
+        gap: 10px;
+    }
+    .file-tile {
+        min-width: 140px;
+        flex-basis: 140px;
+    }
+}
+@media (max-width: 700px) {
+    .fence-links, .filemanager-ungrouped {
+        gap: 8px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .file-tile {
+        min-width: 0;
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+    .add-link-form, .add-fence-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 14px 10px;
+    }
+    .add-link-form-wrapper, .add-fence-form-wrapper {
+        margin-bottom: 18px;
+    }
+    .add-link-input, .add-link-url, .add-fence-input {
+        min-width: 0;
+    }
+}
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+.status-good {
+    background-color: var(--color-status-good);
+}
+.status-ok {
+    background-color: var(--color-status-ok);
+}
+.status-weak {
+    background-color: var(--color-status-weak);
+}
+.status-bad {
+    background-color: var(--color-status-bad);
+}
+.status-label {
+    font-size: 0.75em;
+    margin-left: 4px;
+    color: var(--color-text-secondary);
+    vertical-align: middle;
+}
+.rss-feed {
+    margin-bottom: 20px;
+}
+.rss-feed h3 {
+    margin-top: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+}
+.rss-item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border2);
+}
+.rss-item:last-child {
+    border-bottom: none;
+}
+.rss-item a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+.rss-item a:hover {
+    color: var(--color-link);
+}
+.rss-item-date {
+    font-size: 0.7em;
+    color: var(--color-rss-item-date);
+    margin-top: 3px;
+}
+.rss-add-form {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.rss-add-form input[type="text"] {
+    flex: 1;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-info);
+    color: var(--color-text);
+}
+.rss-add-form button {
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-link);
+    color: white;
+    cursor: pointer;
+}
+.rss-feed-list {
+    margin-bottom: 10px;
+}
+.rss-feed-list-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: var(--color-rss-feed-list);
+    margin-bottom: 2px;
+}
+.rss-feed-list-item button {
+    margin-left: 8px;
+    background: none;
+    border: none;
+    color: var(--color-danger);
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0 4px;
+}
+.rss-feed-list-item button:hover {
+    color: var(--color-rss-feed-list-btn-hover);
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+.search-bar form {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+}
+.search-bar input[type="text"] {
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    margin-right: 5px;
+    flex: 1;
+    box-sizing: border-box;
+    background-color: var(--color-bg-info);
+    color: var(--color-text);
+}
+.search-bar input[type="submit"] {
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-link);
+    color: white;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.info-widget {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-left: auto;
+}
+.info-item {
+    background-color: var(--color-bg-info);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/* Light mode overrides */
+body.light-mode {
+    --color-bg: #f7f7f9;
+    --color-bg-alt: #e9e9ef;
+    --color-bg-form: #fff;
+    --color-bg-form2: #f3f3f7;
+    --color-bg-sidebar: #e9e9ef;
+    --color-bg-info: #e0e0e6;
+    --color-text: #232326;
+    --color-text-secondary: #444;
+    --color-link: #0a84ff;
+    --color-link-hover: #4f8cff;
+    --color-btn: #e0e0e6;
+    --color-btn-hover: #b0b0b0;
+    --color-btn-alt: #7bb312;
+    --color-btn-alt2: #0a84ff;
+    --color-border: #bbb;
+    --color-border2: #ccc;
+    --color-danger: #e74c3c;
+    --color-warning: #b0f312;
+    --color-success: #2ecc71;
+    --color-favicon-bg: #f3f3f7;
+    --color-rss-item-date: #666;
+    --color-rss-feed-list: #666;
+    --color-rss-feed-list-btn-hover: #e74c3c;
+    --color-file-url: #888;
+    --color-status-good: #2ecc71;
+    --color-status-ok: #b0f312;
+    --color-status-weak: #ff9900;
+    --color-status-bad: #e74c3c;
+    --color-btn-gradient: linear-gradient(90deg, #0a84ff 60%, #4f8cff 100%);
+    --color-btn-gradient-alt: linear-gradient(90deg, #b0f312 60%, #0a84ff 100%);
+    --color-btn-gradient-hover: linear-gradient(90deg, #4f8cff 0%, #0a84ff 100%);
+    --color-btn-gradient-alt-hover: linear-gradient(90deg, #0a84ff 0%, #b0f312 100%);
+    --color-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
+    --color-shadow-btn: 0 2px 8px 0 rgba(10,132,255,0.06);
+    --color-shadow-btn-alt: 0 2px 8px 0 rgba(176,243,18,0.06);
+    --color-shadow-btn-hover: 0 4px 16px 0 rgba(10,132,255,0.10);
+    --color-shadow-btn-alt-hover: 0 4px 16px 0 rgba(176,243,18,0.10);
+}
+
+/* Ensure header buttons have dark text in light theme */
+body.light-mode .export-btn,
+body.light-mode .import-btn,
+body.light-mode .theme-toggle-btn {
+    color: #232326;
+}
+body.light-mode .export-btn:hover,
+body.light-mode .import-btn:hover,
+body.light-mode .theme-toggle-btn:hover {
+    color: #232326;
+}
+
+/* Bing Picture of the Day styles */
+.bing-image-container {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    box-shadow: var(--color-shadow);
+    /* Overlay for dark mode readability */
+    overflow: hidden;
+}
+.bing-image-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.10) 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+.bing-copyright-info {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.55);
+    padding: 10px 16px;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 1em;
+    z-index: 1;
+    text-shadow: 1px 1px 2px #000;
+    max-width: 90%;
+    box-sizing: border-box;
+}
+body.light-mode .bing-copyright-info {
+    background-color: rgba(255,255,255,0.7);
+    color: #232326;
+    text-shadow: none;
+}
+body.light-mode .bing-image-container::before {
+    background: linear-gradient(0deg, rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05) 100%);
+}
+</style>
+</head>
+<body>
+<div class="main-content-and-sidebar">
+  <div class="main-content">
+      <header>
+          <div class="container header-content" style="position:relative;">
+              <h1>
+                  <span class="export-import-inline">
+                      <button type="button" class="export-btn" id="export-links-btn" title="Export links as JSON">Export Links</button>
+                      <label for="import-links-input" class="import-btn" style="display:inline-block; cursor:pointer; margin-bottom:0;" title="Import links from JSON">Import Links
+                          <input type="file" id="import-links-input" accept="application/json" style="display:none;">
+                      </label>
+                      <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle light/dark mode">🌙</button>
+                  </span>
+              </h1>
+              <div class="search-bar">
+                  <form id="search-form">
+                      <input type="text" id="search-input" placeholder="Search...">
+                      <input type="submit" value="Go">
+                  </form>
+              </div>
+              <div class="info-widget">
+                  <div class="info-item" id="xmr-price">XMR: Loading...</div>
+                  <div class="info-item" id="week-number">Week: Loading...</div>
+                  <div class="info-item" id="weather">Weather: Loading...</div>
+              </div>
+          </div>
+      </header>
+      <div class="container">
+          <!-- Bing Picture of the Day section -->
+          <div class="bing-image-container" id="bing-image-container">
+              <div class="bing-copyright-info" id="bing-copyright-info">
+                  Loading Bing Picture of the Day...
+              </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+              <button type="button" class="add-link-btn" id="add-link-btn" title="Add new link">+ Add Link</button>
+              <button type="button" class="add-fence-btn" id="add-fence-btn" title="Add new fence">+ Add Fence</button>
+          </div>
+          <div class="add-link-form-wrapper" id="add-link-form-wrapper" style="display:none;">
+            <form class="add-link-form" autocomplete="off" id="add-link-form">
+                <div class="add-link-field">
+                    <label class="add-link-label">Link Name</label>
+                    <input type="text" class="add-link-input" id="add-link-name" placeholder="e.g. My Favorite Site" required>
+                </div>
+                <div class="add-link-field">
+                    <label class="add-link-label">URL</label>
+                    <input type="text" class="add-link-url" id="add-link-url" placeholder="e.g. https://example.com" required>
+                </div>
+                <button type="submit" class="add-link-submit-btn">Add Link</button>
+                <button type="button" class="add-link-submit-btn" style="background:#444; color:#fff; margin-top:18px;" id="cancel-add-link">Cancel</button>
+            </form>
+          </div>
+          <div class="add-fence-form-wrapper" id="add-fence-form-wrapper" style="display:none;">
+            <form class="add-fence-form" autocomplete="off" id="add-fence-form">
+                <input type="text" class="add-fence-input" id="add-fence-name" placeholder="Fence name..." required>
+                <button type="submit" class="add-fence-submit-btn">Add Fence</button>
+                <button type="button" class="add-fence-submit-btn" style="background:#444; color:#fff; margin-top:18px;" id="cancel-add-fence">Cancel</button>
+            </form>
+          </div>
+          <div class="filemanager-bar" id="filemanager-bar"></div>
+      </div>
+  </div>
+  <div class="rss-sidebar">
+      <div class="rss-feed">
+          <h3>Latest News</h3>
+          <form class="rss-add-form" id="rss-add-form">
+              <input type="text" id="rss-url-input" placeholder="Add RSS feed URL..." required>
+              <button type="submit">Add</button>
+          </form>
+          <div class="rss-feed-list" id="rss-feed-list"></div>
+          <div id="rss-feed-content"></div>
+      </div>
+  </div>
+</div>
+<script>
+// --- Bing Picture of the Day logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('bing-image-container');
+    const copyrightDiv = document.getElementById('bing-copyright-info');
+    const apiUrl = 'https://corsproxy.io/?https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US';
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const imageUrl = 'https://www.bing.com' + data.images[0].url;
+            const copyright = data.images[0].copyright;
+            const copyrightLink = data.images[0].copyrightlink;
+            const title = data.images[0].title;
+
+            // Set the background image of the container
+            container.style.backgroundImage = `url(${imageUrl})`;
+
+            // Update the copyright information with a link
+            copyrightDiv.innerHTML = `
+                <strong>${title}</strong>
+                <br>
+                <strong>Copyright:</strong>
+                <a href="${copyrightLink}" target="_blank" style="color: inherit; text-decoration: none;">
+                    ${copyright}
+                </a>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching the Bing image of the day:', error);
+            // Fallback content in case the API call fails
+            container.style.backgroundImage = `url('https://source.unsplash.com/1920x1080/?nature,landscape')`;
+            copyrightDiv.innerHTML = 'Failed to load image. Showing a random nature landscape instead.';
+        });
+});
+
+// --- FILEMANAGER LOGIC WITH FENCES ---
+
+const LINKS_KEY = 'dashboardFilemanagerLinks';
+const FENCES_KEY = 'dashboardFilemanagerFences';
+
+// --- THEME SWITCH LOGIC ---
+const THEME_KEY = 'dashboardThemeMode';
+
+function setTheme(mode) {
+    if (mode === 'light') {
+        document.body.classList.add('light-mode');
+        document.getElementById('theme-toggle-btn').textContent = '🌞';
+    } else {
+        document.body.classList.remove('light-mode');
+        document.getElementById('theme-toggle-btn').textContent = '🌙';
+    }
+    localStorage.setItem(THEME_KEY, mode);
+}
+
+function getTheme() {
+    return localStorage.getItem(THEME_KEY) || 'dark';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme initialization
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    let theme = getTheme();
+    setTheme(theme);
+
+    themeBtn.addEventListener('click', function() {
+        let current = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+        let next = current === 'light' ? 'dark' : 'light';
+        setTheme(next);
+    });
+
+    // --- rest of DOMContentLoaded below ---
+    renderFilemanager();
+
+    document.getElementById('add-link-btn').addEventListener('click', function() {
+        showAddLinkForm();
+    });
+    document.getElementById('cancel-add-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        hideAddLinkForm();
+    });
+    document.getElementById('add-link-form').addEventListener('submit', addOrEditLink);
+
+    // Fences
+    document.getElementById('add-fence-btn').addEventListener('click', function() {
+        showAddFenceForm();
+    });
+    document.getElementById('cancel-add-fence').addEventListener('click', function(e) {
+        e.preventDefault();
+        hideAddFenceForm();
+    });
+    document.getElementById('add-fence-form').addEventListener('submit', addFence);
+
+    // Search
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        renderFilemanager(document.getElementById('search-input').value);
+    });
+    document.getElementById('search-input').addEventListener('input', function() {
+        renderFilemanager(this.value);
+    });
+
+    // Export links as JSON
+    const exportBtn = document.getElementById('export-links-btn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const all = getLinks();
+            const blob = new Blob([JSON.stringify(all, null, 2)], {type: "application/json"});
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dashboard-links.json';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        });
+    }
+
+    // Import links from JSON
+    const importInput = document.getElementById('import-links-input');
+    if (importInput) {
+        importInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        const imported = JSON.parse(ev.target.result);
+                        if (Array.isArray(imported)) {
+                            saveLinks(imported);
+                            renderFilemanager(document.getElementById('search-input').value);
+                        } else {
+                            alert('Invalid link JSON format.');
+                        }
+                    } catch (err) {
+                        alert('Failed to import: Invalid JSON.');
+                    }
+                };
+                reader.readAsText(file);
+                importInput.value = '';
+            }
+        });
+    }
+
+    // XMR, Weather, Week, RSS (unchanged)
+    fetchXMRPrice();
+    fetchWeather();
+    updateWeekNumber();
+
+    // RSS feed add form
+    const rssAddForm = document.getElementById('rss-add-form');
+    const rssUrlInput = document.getElementById('rss-url-input');
+    rssAddForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = rssUrlInput.value.trim();
+        if (url) {
+            let feeds = getSavedRSSFeeds();
+            if (!feeds.includes(url)) {
+                feeds.push(url);
+                saveRSSFeeds(feeds);
+                renderRSSFeedList(feeds);
+                fetchRSSFeedsAndRender();
+            }
+            rssUrlInput.value = '';
+        }
+    });
+
+    // Initial render
+    renderRSSFeedList(getSavedRSSFeeds());
+    fetchRSSFeedsAndRender();
+});
+
+function getLinks() {
+    let data = localStorage.getItem(LINKS_KEY);
+    if (!data) {
+        data = JSON.stringify([]);
+        localStorage.setItem(LINKS_KEY, data);
+    }
+    try {
+        return JSON.parse(data);
+    } catch {
+        return [];
+    }
+}
+
+function saveLinks(arr) {
+    localStorage.setItem(LINKS_KEY, JSON.stringify(arr));
+}
+
+function getFences() {
+    let data = localStorage.getItem(FENCES_KEY);
+    if (!data) {
+        data = JSON.stringify([]);
+        localStorage.setItem(FENCES_KEY, data);
+    }
+    try {
+        return JSON.parse(data);
+    } catch {
+        return [];
+    }
+}
+
+function saveFences(arr) {
+    localStorage.setItem(FENCES_KEY, JSON.stringify(arr));
+}
+
+function getFaviconUrl(url) {
+    try {
+        const u = new URL(url);
+        return `https://www.google.com/s2/favicons?sz=64&domain=${u.hostname}`;
+    } catch {
+        return '';
+    }
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function(m) {
+        switch (m) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#39;';
+        }
+    });
+}
+
+let dragSrc = null; // {type: 'link'|'fence', index: number, fenceId?: string}
+let dragOverFenceId = null;
+
+// --- PING STATUS LOGIC ---
+const linkPingStatus = {}; // url -> {status, label}
+
+function getPingStatusLabelAndClass(ms) {
+    if (ms === null || ms === undefined) {
+        return { label: 'Bad', className: 'status-bad' };
+    }
+    if (ms < 400) {
+        return { label: 'Good', className: 'status-good' };
+    } else if (ms < 1000) {
+        return { label: 'Ok', className: 'status-ok' };
+    } else if (ms < 3000) {
+        return { label: 'Very Weak', className: 'status-weak' };
+    } else {
+        return { label: 'Bad', className: 'status-bad' };
+    }
+}
+
+// Try to "ping" a URL by requesting a favicon or HEAD request
+function pingUrl(url, cb) {
+    // Use favicon as a proxy for reachability
+    let img = new window.Image();
+    let start = Date.now();
+    let done = false;
+    let timeout = setTimeout(function() {
+        if (!done) {
+            done = true;
+            cb(null); // timeout = bad
+        }
+    }, 3500);
+
+    img.onload = function() {
+        if (!done) {
+            done = true;
+            clearTimeout(timeout);
+            cb(Date.now() - start);
+        }
+    };
+    img.onerror = function() {
+        if (!done) {
+            done = true;
+            clearTimeout(timeout);
+            cb(null); // error = bad
+        }
+    };
+    // Use favicon, but fallback to / if not available
+    try {
+        const u = new URL(url);
+        img.src = `https://${u.hostname}/favicon.ico?cachebust=${Math.random()}`;
+    } catch {
+        img.src = url;
+    }
+}
+
+function renderFilemanager(filter = '') {
+    const bar = document.getElementById('filemanager-bar');
+    bar.innerHTML = '';
+
+    let links = getLinks();
+    let fences = getFences();
+
+    // Filter links if needed
+    let filteredLinks = links;
+    if (filter) {
+        filteredLinks = links.filter(link =>
+            (link.name && link.name.toLowerCase().includes(filter.toLowerCase())) ||
+            (link.url && link.url.toLowerCase().includes(filter.toLowerCase()))
+        );
+    }
+
+    // Build a map of fenceId -> fence object
+    const fenceMap = {};
+    fences.forEach(f => { fenceMap[f.id] = f; });
+
+    // Group links by fenceId (null or undefined = ungrouped)
+    const fenceLinks = {};
+    filteredLinks.forEach((link, idx) => {
+        const fenceId = link.fenceId || null;
+        if (!fenceLinks[fenceId]) fenceLinks[fenceId] = [];
+        fenceLinks[fenceId].push({ ...link, _idx: idx });
+    });
+
+    // Render fences in order
+    fences.forEach((fence, fenceOrderIdx) => {
+        const fenceDiv = document.createElement('div');
+        fenceDiv.className = 'fence-block';
+        fenceDiv.setAttribute('data-fence-id', fence.id);
+
+        // Drag events for moving links into fence
+        fenceDiv.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fenceDiv.classList.add('drag-over');
+            dragOverFenceId = fence.id;
+        });
+        fenceDiv.addEventListener('dragleave', (e) => {
+            fenceDiv.classList.remove('drag-over');
+            dragOverFenceId = null;
+        });
+        fenceDiv.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fenceDiv.classList.remove('drag-over');
+            if (dragSrc && dragSrc.type === 'link') {
+                moveLinkToFence(dragSrc.index, fence.id);
+            }
+            dragOverFenceId = null;
+        });
+
+        // Fence header
+        const header = document.createElement('div');
+        header.className = 'fence-header';
+
+        const title = document.createElement('div');
+        title.className = 'fence-title';
+        title.textContent = fence.name;
+
+        // Edit fence name
+        const editBtn = document.createElement('button');
+        editBtn.className = 'fence-edit-btn';
+        editBtn.title = 'Edit fence name';
+        editBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14.85 3.15a1.5 1.5 0 0 1 2.12 2.12l-9.19 9.19a1 1 0 0 1-.41.25l-3.25.97a.5.5 0 0 1-.62-.62l.97-3.25a1 1 0 0 1 .25-.41l9.19-9.19zm1.41 1.41a.5.5 0 0 0-.71 0l-9.19 9.19a.5.5 0 0 0-.13.21l-.8 2.67 2.67-.8a.5.5 0 0 0 .21-.13l9.19-9.19a.5.5 0 0 0 0-.71z" fill="currentColor"/>
+</svg>`;
+        editBtn.onclick = (e) => {
+            e.preventDefault();
+            const newName = prompt('Edit fence name:', fence.name);
+            if (newName && newName.trim()) {
+                fences[fenceOrderIdx].name = newName.trim();
+                saveFences(fences);
+                renderFilemanager(document.getElementById('search-input').value);
+            }
+        };
+
+        // Delete fence
+        const delBtn = document.createElement('button');
+        delBtn.className = 'fence-delete-btn';
+        delBtn.title = 'Delete fence';
+        delBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+  <rect x="5" y="7" width="10" height="8" rx="2" fill="currentColor" opacity="0.15"/>
+  <rect x="8" y="9" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+  <rect x="10.5" y="9" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+  <rect x="4" y="5" width="12" height="2" rx="1" fill="currentColor"/>
+  <rect x="8" y="2" width="4" height="2" rx="1" fill="currentColor"/>
+</svg>`;
+        delBtn.onclick = (e) => {
+            e.preventDefault();
+            if (confirm(`Delete fence "${fence.name}"? Links inside will be ungrouped.`)) {
+                // Remove fence
+                fences.splice(fenceOrderIdx, 1);
+                saveFences(fences);
+                // Ungroup links in this fence
+                let allLinks = getLinks();
+                allLinks.forEach(l => {
+                    if (l.fenceId === fence.id) delete l.fenceId;
+                });
+                saveLinks(allLinks);
+                renderFilemanager(document.getElementById('search-input').value);
+            }
+        };
+
+        header.appendChild(title);
+        header.appendChild(editBtn);
+        header.appendChild(delBtn);
+        fenceDiv.appendChild(header);
+
+        // Fence links area
+        const linksDiv = document.createElement('div');
+        linksDiv.className = 'fence-links';
+
+        // Render links in this fence, in order of their appearance in the links array
+        (fenceLinks[fence.id] || []).forEach(link => {
+            const tile = createFileTile(link, link._idx, fence.id);
+            linksDiv.appendChild(tile);
+        });
+
+        fenceDiv.appendChild(linksDiv);
+        bar.appendChild(fenceDiv);
+    });
+
+    // Render ungrouped links
+    const ungroupedLinks = fenceLinks[null] || [];
+    if (ungroupedLinks.length > 0) {
+        const ungroupedDiv = document.createElement('div');
+        ungroupedDiv.className = 'filemanager-ungrouped';
+        ungroupedLinks.forEach(link => {
+            const tile = createFileTile(link, link._idx, null);
+            ungroupedDiv.appendChild(tile);
+        });
+        bar.appendChild(ungroupedDiv);
+    }
+}
+
+function createFileTile(link, idx, fenceId) {
+    const tile = document.createElement('div');
+    tile.className = 'file-tile';
+    tile.setAttribute('draggable', 'true');
+    tile.setAttribute('data-index', idx);
+
+    // Drag events for grid reordering and moving between fences
+    tile.addEventListener('dragstart', (e) => {
+        dragSrc = { type: 'link', index: idx, fenceId: fenceId };
+        tile.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', idx);
+    });
+    tile.addEventListener('dragend', (e) => {
+        tile.classList.remove('dragging');
+        document.querySelectorAll('.file-tile.drag-over').forEach(f => f.classList.remove('drag-over'));
+        document.querySelectorAll('.fence-block.drag-over').forEach(f => f.classList.remove('drag-over'));
+        dragSrc = null;
+        dragOverFenceId = null;
+    });
+    tile.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        tile.classList.add('drag-over');
+    });
+    tile.addEventListener('dragleave', (e) => {
+        tile.classList.remove('drag-over');
+    });
+    tile.addEventListener('drop', (e) => {
+        e.preventDefault();
+        tile.classList.remove('drag-over');
+        if (dragSrc && dragSrc.type === 'link') {
+            moveLinkInList(dragSrc.index, idx);
+        }
+    });
+
+    // File "icon" and info
+    const faviconUrl = link.favicon || getFaviconUrl(link.url);
+    const a = document.createElement('a');
+    a.href = link.url;
+    a.target = "_blank";
+    a.style.textDecoration = "none";
+    a.style.width = "100%";
+    a.style.display = "flex";
+    a.style.flexDirection = "column";
+    a.style.alignItems = "center";
+    a.style.flex = "1";
+
+    const favicon = document.createElement('img');
+    favicon.className = 'file-favicon';
+    favicon.src = faviconUrl;
+    favicon.alt = "favicon";
+    favicon.onerror = function() { this.style.display = 'none'; };
+
+    const name = document.createElement('div');
+    name.className = 'file-name';
+    name.textContent = link.name;
+
+    const url = document.createElement('div');
+    url.className = 'file-url';
+    url.textContent = link.url;
+
+    // --- Ping status indicator ---
+    const statusWrapper = document.createElement('div');
+    statusWrapper.style.display = "flex";
+    statusWrapper.style.alignItems = "center";
+    statusWrapper.style.justifyContent = "center";
+    statusWrapper.style.marginBottom = "6px";
+    statusWrapper.style.minHeight = "18px";
+
+    // If we already have a ping status, use it, else ping and update
+    function updateStatusIndicator(ms) {
+        const { label, className } = getPingStatusLabelAndClass(ms);
+        statusIndicator.className = 'status-indicator ' + className;
+        statusLabel.textContent = label;
+    }
+
+    const statusIndicator = document.createElement('span');
+    statusIndicator.className = 'status-indicator';
+    const statusLabel = document.createElement('span');
+    statusLabel.className = 'status-label';
+
+    statusWrapper.appendChild(statusIndicator);
+    statusWrapper.appendChild(statusLabel);
+
+    // Use cached status if available, else ping
+    if (linkPingStatus[link.url]) {
+        updateStatusIndicator(linkPingStatus[link.url].ms);
+    } else {
+        // Set to loading
+        statusIndicator.className = 'status-indicator';
+        statusLabel.textContent = '...';
+        pingUrl(link.url, function(ms) {
+            linkPingStatus[link.url] = { ms };
+            updateStatusIndicator(ms);
+        });
+    }
+
+    a.appendChild(favicon);
+    a.appendChild(statusWrapper);
+    a.appendChild(name);
+    a.appendChild(url);
+
+    tile.appendChild(a);
+
+    // Actions
+    const actions = document.createElement('div');
+    actions.className = 'file-actions';
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'file-delete-btn';
+    delBtn.title = 'Delete link';
+    delBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+  <rect x="5" y="7" width="10" height="8" rx="2" fill="currentColor" opacity="0.15"/>
+  <rect x="8" y="9" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+  <rect x="10.5" y="9" width="1.5" height="4" rx="0.75" fill="currentColor"/>
+  <rect x="4" y="5" width="12" height="2" rx="1" fill="currentColor"/>
+  <rect x="8" y="2" width="4" height="2" rx="1" fill="currentColor"/>
+</svg>`;
+    delBtn.onclick = (e) => {
+        e.preventDefault();
+        if (confirm(`Delete link "${link.name}"?`)) {
+            let arr = getLinks();
+            arr.splice(idx, 1);
+            saveLinks(arr);
+            renderFilemanager(document.getElementById('search-input').value);
+        }
+    };
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'file-edit-btn';
+    editBtn.title = 'Edit link';
+    editBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display:block;" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14.85 3.15a1.5 1.5 0 0 1 2.12 2.12l-9.19 9.19a1 1 0 0 1-.41.25l-3.25.97a.5.5 0 0 1-.62-.62l.97-3.25a1 1 0 0 1 .25-.41l9.19-9.19zm1.41 1.41a.5.5 0 0 0-.71 0l-9.19 9.19a.5.5 0 0 0-.13.21l-.8 2.67 2.67-.8a.5.5 0 0 0 .21-.13l9.19-9.19a.5.5 0 0 0 0-.71z" fill="currentColor"/>
+</svg>`;
+    editBtn.onclick = (e) => {
+        e.preventDefault();
+        showEditLinkForm(idx);
+    };
+
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+
+    tile.appendChild(actions);
+
+    return tile;
+}
+
+function moveLinkToFence(linkIdx, fenceId) {
+    let arr = getLinks();
+    if (!arr[linkIdx]) return;
+    arr[linkIdx].fenceId = fenceId;
+    saveLinks(arr);
+    renderFilemanager(document.getElementById('search-input').value);
+}
+
+function moveLinkInList(fromIdx, toIdx) {
+    if (fromIdx === toIdx || isNaN(fromIdx) || isNaN(toIdx)) return;
+    let arr = getLinks();
+    const [moved] = arr.splice(fromIdx, 1);
+    arr.splice(toIdx, 0, moved);
+    saveLinks(arr);
+    renderFilemanager(document.getElementById('search-input').value);
+}
+
+function showAddLinkForm() {
+    document.getElementById('add-link-form-wrapper').style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById('add-link-name').focus();
+    }, 100);
+}
+function hideAddLinkForm() {
+    document.getElementById('add-link-form-wrapper').style.display = 'none';
+    document.getElementById('add-link-form').reset();
+    document.getElementById('add-link-form').removeAttribute('data-edit-idx');
+}
+
+function addOrEditLink(e) {
+    e.preventDefault();
+    const name = document.getElementById('add-link-name').value.trim();
+    let url = document.getElementById('add-link-url').value.trim();
+    if (!name || !url) return;
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    const faviconUrl = getFaviconUrl(url);
+
+    let arr = getLinks();
+    const editIdx = document.getElementById('add-link-form').getAttribute('data-edit-idx');
+    if (editIdx !== null && editIdx !== undefined && editIdx !== '') {
+        // preserve fenceId if editing
+        let old = arr[parseInt(editIdx, 10)];
+        arr[parseInt(editIdx, 10)] = { name, url, favicon: faviconUrl, fenceId: old && old.fenceId ? old.fenceId : undefined };
+    } else {
+        arr.push({ name, url, favicon: faviconUrl });
+    }
+    saveLinks(arr);
+    hideAddLinkForm();
+    renderFilemanager(document.getElementById('search-input').value);
+}
+
+function showEditLinkForm(idx) {
+    const arr = getLinks();
+    const link = arr[idx];
+    if (!link) return;
+    showAddLinkForm();
+    document.getElementById('add-link-name').value = link.name;
+    document.getElementById('add-link-url').value = link.url;
+    document.getElementById('add-link-form').setAttribute('data-edit-idx', idx);
+}
+
+// FENCE LOGIC
+function showAddFenceForm() {
+    document.getElementById('add-fence-form-wrapper').style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById('add-fence-name').focus();
+    }, 100);
+}
+function hideAddFenceForm() {
+    document.getElementById('add-fence-form-wrapper').style.display = 'none';
+    document.getElementById('add-fence-form').reset();
+}
+
+function addFence(e) {
+    e.preventDefault();
+    const name = document.getElementById('add-fence-name').value.trim();
+    if (!name) return;
+    let fences = getFences();
+    // Generate unique id
+    let id = 'fence-' + Date.now() + '-' + Math.floor(Math.random() * 100000);
+    fences.push({ id, name });
+    saveFences(fences);
+    hideAddFenceForm();
+    renderFilemanager(document.getElementById('search-input').value);
+}
+
+// --- XMR, Weather, Week, RSS (unchanged) ---
+function getWeekNumber() {
+    const now = new Date();
+    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    return weekNo;
+}
+
+async function fetchXMRPrice() {
+    try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=usd');
+        const data = await response.json();
+        document.getElementById('xmr-price').textContent = `XMR: $${data.monero.usd}`;
+    } catch (error) {
+        document.getElementById('xmr-price').textContent = 'XMR: Error';
+    }
+}
+
+async function fetchWeather() {
+    try {
+        // Note: You'll need to replace with your actual location and API key
+        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=London&units=metric&appid=YOUR_API_KEY');
+        const data = await response.json();
+        const temp = Math.round(data.main.temp);
+        const weather = data.weather[0].main;
+        document.getElementById('weather').textContent = `Weather: ${temp}°C ${weather}`;
+    } catch (error) {
+        document.getElementById('weather').textContent = 'Weather: Error';
+    }
+}
+
+// --- MULTI RSS FEED IN SIDEBAR (unchanged) ---
+function getSavedRSSFeeds() {
+    const feeds = localStorage.getItem('dashboardRSSFeeds');
+    if (!feeds) {
+        return [
+            'https://4sysops.com/feed/',
+            'https://nixos.org/blog/announcements-rss.xml',
+            'https://lwn.net/headlines/rss',
+            'https://news.opensuse.org/feed.xml'
+        ];
+    }
+    try {
+        const arr = JSON.parse(feeds);
+        if (Array.isArray(arr) && arr.length > 0) return arr;
+        return [
+            'https://4sysops.com/feed/',
+            'https://nixos.org/blog/announcements-rss.xml',
+            'https://lwn.net/headlines/rss',
+            'https://news.opensuse.org/feed.xml'
+        ];
+    } catch {
+        return [
+            'https://4sysops.com/feed/',
+            'https://nixos.org/blog/announcements-rss.xml',
+            'https://lwn.net/headlines/rss',
+            'https://news.opensuse.org/feed.xml'
+        ];
+    }
+}
+
+function saveRSSFeeds(feeds) {
+    localStorage.setItem('dashboardRSSFeeds', JSON.stringify(feeds));
+}
+
+function renderRSSFeedList(feeds) {
+    const listDiv = document.getElementById('rss-feed-list');
+    listDiv.innerHTML = '';
+    feeds.forEach((url, idx) => {
+        const div = document.createElement('div');
+        div.className = 'rss-feed-list-item';
+        div.textContent = url;
+        const btn = document.createElement('button');
+        btn.title = 'Remove feed';
+        btn.textContent = '×';
+        btn.onclick = function() {
+            const newFeeds = feeds.slice(0, idx).concat(feeds.slice(idx + 1));
+            saveRSSFeeds(newFeeds);
+            renderRSSFeedList(newFeeds);
+            fetchRSSFeedsAndRender();
+        };
+        div.appendChild(btn);
+        listDiv.appendChild(div);
+    });
+}
+
+async function fetchRSSFeedsAndRender() {
+    const feeds = getSavedRSSFeeds();
+    renderRSSFeedList(feeds);
+
+    const allItems = [];
+    const fetchPromises = feeds.map(async (rssUrl) => {
+        try {
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (data.items && data.items.length > 0) {
+                data.items.forEach(item => {
+                    item._feedTitle = data.feed && data.feed.title ? data.feed.title : rssUrl;
+                });
+                allItems.push(...data.items);
+            }
+        } catch (e) {
+            allItems.push({
+                title: `Failed to load: ${rssUrl}`,
+                link: rssUrl,
+                pubDate: new Date().toISOString(),
+                _feedTitle: 'Error'
+            });
+        }
+    });
+
+    await Promise.all(fetchPromises);
+
+    allItems.sort((a, b) => {
+        const da = new Date(a.pubDate).getTime();
+        const db = new Date(b.pubDate).getTime();
+        return db - da;
+    });
+
+    const feedContent = document.getElementById('rss-feed-content');
+    feedContent.innerHTML = '';
+    if (allItems.length > 0) {
+        allItems.slice(0, 16).forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'rss-item';
+            div.innerHTML = `
+                <a href="${item.link}" target="_blank">${item.title}</a>
+                <div class="rss-item-date">${new Date(item.pubDate).toLocaleDateString()} <span style="color:#0a84ff;">${item._feedTitle ? '· ' + item._feedTitle : ''}</span></div>
+            `;
+            feedContent.appendChild(div);
+        });
+    } else {
+        feedContent.innerHTML = '<div style="color:#aaa;">No news found.</div>';
+    }
+}
+
+function updateWeekNumber() {
+    const week = getWeekNumber();
+    const weekDiv = document.getElementById('week-number');
+    if (weekDiv) {
+        weekDiv.textContent = `Week: ${week}`;
+    }
+}
+</script>
+</body>
+</html>
